@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue Js</title>
+</head>
+
+<body>
+    <div id="app">
+        <div v-show="visible">
+            <h1>{{ titulo | uppercase }}</h1>
+            <h2>{{subtitulo | capitalize }}</h2>
+            <a :href="url" target="blank">{{ page }}</a>
+        </div>
+        <div v-show="!visible">
+            Oculto
+        </div>
+        <br>
+        <button @click="cont--">Restar</button>
+        <span>El contador esta en {{ cont }}</span>
+        <button v-on:click="sumar">Sum</button>
+        <br><br>
+        <input type="text" name="Nombre" v-model="name" placeholder="Ingresa tu nombre">
+        <p>Tu nombre en mayusculas es: {{name | uppercase}}</p>
+        <br><br>
+        <form @submit.prevent="submit">
+            <h2>¿Cuales son tus cursos favoritos?</h2>
+            <template v-for="item in cursos">
+                <input v-model="seleccionados" type="checkbox" :id="item.value" :value="item.value">
+                <label :for="item.value">{{item.name}}</label>
+            </template>
+
+
+            <!-- <input v-model="cursos" type="checkbox" id="vue" value="vue">
+            <label for="vue">Curso de Vue.js</label>
+            <input v-model="cursos" type="checkbox" id="angular" value="angular">
+            <label for="angular">Curso de Angular</label>
+            <input v-model="cursos" type="checkbox" id="react" value="react">
+            <label for="react">Curso de React</label> -->
+            <br>
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script type="text/javascript">
+        let app = new Vue({
+            el: '#app',
+            data: {
+                url: 'https://vuejs.org/',
+                page: 'Ir a VueJs...',
+                titulo: 'Este es el titulo',
+                subtitulo: 'Este Es El Subtitulo',
+                visible: true,
+                name: '',
+                cont: 0,
+                cursos: [{
+                    value: 'vue',
+                    name: 'Curso de vue.js'
+                }, {
+                    value: 'react',
+                    name: 'Curso de React'
+                }, {
+                    value: 'angular',
+                    name: 'Curso de angular'
+                }],
+                seleccionados: []
+            },
+            filters: {
+                uppercase: function(str) {
+                    return str.toUpperCase();
+                },
+                lowercase: function(str) {
+                    return str.toLowerCase();
+                },
+                capitalize: function(str) {
+                    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+                }
+            },
+            methods: {
+                sumar: function() {
+                    this.cont++;
+                },
+                submit: function() {
+                    console.log("submit");
+                    console.log(this.seleccionados);
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>
